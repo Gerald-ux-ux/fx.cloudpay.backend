@@ -13,15 +13,21 @@ class BalancesController < ApplicationController
     end
   end
 
-  def index
-    if params[:date].present?
-      selected_date = Date.parse(params[:date])
-      balances = Balance.where(date: selected_date)
-      render json: balances, status: :ok
+def index
+  if params[:date].present?
+    selected_date = Date.parse(params[:date])
+    balances = Balance.where(formatted_date: selected_date.strftime("%b %d %Y"))
+
+    if balances.empty?
+      render json: { error: "No balances found for the specified date" }, status: :not_found
     else
-      render json: { error: "no balance found" }, status: :bad_request
+      render json: balances, status: :ok
     end
+  else
+    render json: { error: "No date specified" }, status: :bad_request
   end
+end
+
 
 private
 def balance_params

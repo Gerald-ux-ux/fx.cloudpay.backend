@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_24_175043) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_25_083633) do
   create_table "balances", force: :cascade do |t|
     t.integer "amount"
     t.integer "user_id", null: false
     t.string "formatted_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date"
     t.index ["user_id"], name: "index_balances_on_user_id"
   end
 
@@ -26,6 +27,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_175043) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date"
+    t.integer "amount"
     t.index ["user_id"], name: "index_collections_on_user_id"
   end
 
