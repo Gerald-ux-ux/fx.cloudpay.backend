@@ -6,12 +6,11 @@ class UsersController < ApplicationController
     {
       id: user.id,
       email: user.email,
+      name: user.name,
       password_digest: user.password_digest,
       created_at: user.created_at.strftime("%d/%m/%Y"),
-      # updated_at: user.updated_at.strftime("%d/%m/%Y")
     }
   end
-
   render json: users, status: :ok
 end
 
@@ -50,7 +49,7 @@ end
   private
 
   def user_params
-    params.permit(:email, :password)
+  params.require(:user).permit(:name, :email, :password)
   end
 
 end

@@ -5,8 +5,6 @@ class CollectionsController < ApplicationController
       collections = Collection.where(date: selected_date)
       if collections.empty?
               render json: { error: "No Collections found for the specified date" }, status: :not_found
-
-         
       else
           render json: collections, status: :ok
       end
