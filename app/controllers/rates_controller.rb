@@ -12,26 +12,27 @@ class RatesController < ApplicationController
     end
   end
 
-  def index
+ def index
   if params[:date].present?
-    selected_date = Date.parse(params[:date]) rescue nil
+    selected_date = Date.parse(params[:date])
+    rates = Rate.where(formatted_date: selected_date.strftime("%b %d %Y"))
 
-    if selected_date.nil?
-      render json: { error: "Invalid date format" }, status: :unprocessable_entity
+    if  rates.empty?
+      render json: { error: "No balances found for the specified date" }, status: :not_found
     else
-      rates = Rate.where(date: selected_date)
-
-      if rates.empty?
-        render json: { error: "No rates found for the specified date" }, status: :not_found
-      else
-        render json: rates, status: :ok
-      end
+      render json:  rates, status: :ok
     end
   else
     render json: { error: "No date specified" }, status: :bad_request
   end
 end
 
+def destroy
+  formatted_date = Date.parse(params[:date]).strftime("%b %d %Y")
+  Rate.where(formatted_date: formatted_date).destroy_all
+
+  head :no_content
+end
 
   private
 
@@ -43,7 +44,8 @@ end
     {
       id: rate.id,
       amount: rate.amount,
-      date: rate.date,
+      rate: rate.amount,
+      date: rate.formatted_date,
       created_at: rate.created_at,
       updated_at: rate.updated_at,
       formatted_date: rate.formatted_date,

@@ -18,7 +18,7 @@ class CollectionsController < ApplicationController
     user = User.find(params[:collection][:user_id])
     collection = user.collections.build(collection_params)
     collection.date = Date.current
-    collection.formatted_date = collection.date.strftime("%b %d %Y")
+    collection.formatted_date = collection.date.strftime("%Y-%m-%d")
 
     if collection.save
       render json: collection_with_user(collection), status: :created

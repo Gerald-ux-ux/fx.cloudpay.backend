@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_22_162908) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_26_055946) do
   create_table "balances", force: :cascade do |t|
     t.integer "amount"
     t.integer "user_id", null: false
@@ -30,6 +30,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_162908) do
     t.date "date"
     t.integer "amount"
     t.index ["user_id"], name: "index_collections_on_user_id"
+  end
+
+  create_table "disbursments", force: :cascade do |t|
+    t.integer "disbursment"
+    t.integer "user_id", null: false
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_disbursments_on_user_id"
   end
 
   create_table "openings", force: :cascade do |t|
@@ -62,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_162908) do
 
   add_foreign_key "balances", "users"
   add_foreign_key "collections", "users"
+  add_foreign_key "disbursments", "users"
   add_foreign_key "openings", "users"
   add_foreign_key "rates", "users"
 end
