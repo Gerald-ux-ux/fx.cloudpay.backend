@@ -2,7 +2,8 @@ class DisbursmentsController < ApplicationController
   def index
     if params[:date].present?
       selected_date = Date.parse(params[:date])
-      disbursments = Disbursment.where(date: selected_date)
+      userId = params[:user_id];
+      disbursments = Disbursment.where(date: selected_date,user_id:userId)
       if disbursments.empty?
         render json: { error: "No Disbursements found for the specified date" }, status: :not_found
       else
@@ -14,7 +15,7 @@ class DisbursmentsController < ApplicationController
   end
 
   def create
-    user = User.find(params[:disbursment][:user_id]) # Updated to use disbursment_params
+    user = User.find(params[:user_id]) # Updated to use disbursment_params
     disbursment = user.disbursments.build(disbursment_params) # Updated to use disbursment_params
     disbursment.date = Date.current
     disbursment.formatted_date = disbursment.date.strftime("%Y-%m-%d")

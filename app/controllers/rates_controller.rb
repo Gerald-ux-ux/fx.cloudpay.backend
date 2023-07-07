@@ -1,6 +1,6 @@
 class RatesController < ApplicationController
   def create
-    user = User.find(params[:rate][:user_id])
+    user = User.find(params[:user_id])
     rate = user.rates.build(rate_params)
     rate.date = Date.current
     rate.formatted_date = rate.date.strftime("%b %d %Y")
@@ -15,7 +15,8 @@ class RatesController < ApplicationController
  def index
   if params[:date].present?
     selected_date = Date.parse(params[:date])
-    rates = Rate.where(formatted_date: selected_date.strftime("%b %d %Y"))
+    userId = params[:user_id]
+    rates = Rate.where(formatted_date: selected_date.strftime("%b %d %Y"),user_id: userId)
 
     if  rates.empty?
       render json: { error: "No balances found for the specified date" }, status: :not_found

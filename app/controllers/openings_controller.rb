@@ -1,6 +1,6 @@
 class OpeningsController < ApplicationController
   def create
-    user = User.find_by(id: params[:opening][:user_id])
+    user = User.find(params[:user_id])
     opening = user.openings.build(opening_params)
     opening.date = Date.current
     opening.formatted_date = opening.date.strftime("%Y-%m-%d")
@@ -15,7 +15,8 @@ class OpeningsController < ApplicationController
   def index
   if params[:date].present?
     selected_date = Date.parse(params[:date])
-    openings = Opening.where(formatted_date: selected_date.strftime("%Y-%m-%d"))
+    userId = params[:user_id];
+    openings = Opening.where(formatted_date: selected_date.strftime("%Y-%m-%d"),user_id: userId)
 
     if  openings.empty?
       render json: { error: "No balances found for the specified date" }, status: :not_found

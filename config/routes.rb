@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :closings
   resources :disbursments
   resources :openings
   resources :rates

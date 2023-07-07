@@ -2,7 +2,8 @@ class CollectionsController < ApplicationController
   def index
     if params[:date].present?
       selected_date = Date.parse(params[:date])
-      collections = Collection.where(date: selected_date)
+      userId = params[:user_id]
+      collections = Collection.where(date: selected_date,user_id:userId)
       if collections.empty?
               render json: { error: "No Collections found for the specified date" }, status: :not_found
       else
@@ -36,6 +37,7 @@ class CollectionsController < ApplicationController
   def collection_with_user(collection)
     {
       id: collection.id,
+      name: collection.name,
       amount: collection.amount,
       date: collection.date,
       created_at: collection.created_at,
