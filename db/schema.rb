@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_07_220949) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_08_111948) do
   create_table "balances", force: :cascade do |t|
     t.integer "amount"
     t.integer "user_id", null: false
@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_220949) do
     t.string "formatted_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date"
     t.index ["user_id"], name: "index_closings_on_user_id"
   end
 

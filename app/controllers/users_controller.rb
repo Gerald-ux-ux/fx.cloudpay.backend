@@ -35,6 +35,17 @@ def create
   end
 end
 
+def destroy
+  user = User.find_by(id: params[:id])
+  if user
+    user.destroy
+    head :no_content
+  else
+    render json: { error: 'User not found' }, status: :not_found
+  end
+end
+
+
 
     def login
     user = User.find_by(email: params[:email])
@@ -49,7 +60,7 @@ end
   private
 
 def user_params
-  params.require(:user).permit(:name, :email, :password)
+  params.require(:user).permit( :email, :password)
 end
 
 end
