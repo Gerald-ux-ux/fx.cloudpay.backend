@@ -9,6 +9,9 @@ gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 # Use sqlite3 as the database for Active Record
 gem 'active_model_serializers'
 
+gem 'rails_12factor', group: :production
+
+
 gem 'bcrypt', '~> 3.1.7'
 gem "sqlite3", "~> 1.4"
 gem 'rack-cors'
