@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :disbursments
-  resources :openings
-  resources :rates
   resources :collections, only: [:index, :show, :create]
   resources :users, only: [:index, :show, :create, :destroy] do
     delete '', action: :destroy, on: :collection
